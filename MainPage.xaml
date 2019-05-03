@@ -9,6 +9,45 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button x:Name="AddButton" Click="OnAddButtonClicked">
+                <SymbolIcon Symbol="Add"/>
+            </Button>
+        </StackPanel>
+
+        <Pivot Grid.Row="1">
+            <PivotItem Header="Header">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <ListView ItemsSource="{x:Bind Collection, Mode=OneWay}"/>
+
+                    <Button Grid.Row="1" Click="OnDeleteButtonClicked" Visibility="{x:Bind DeleteVisible, Mode=OneWay}" >
+                        <Button.Content>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <SymbolIcon Symbol="Delete"/>
+                                <TextBlock Text="(Ctrl + L)" Grid.Row="1"/>
+                            </Grid>
+                        </Button.Content>
+                        <Button.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="L" />
+                        </Button.KeyboardAccelerators>
+                    </Button>
+                </Grid>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

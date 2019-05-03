@@ -24,4 +24,32 @@ using namespace Windows::UI::Xaml::Navigation;
 MainPage::MainPage()
 {
 	InitializeComponent();
+
+	m_collection->VectorChanged += ref new VectorChangedEventHandler<int>(this, &MainPage::OnVectorChanged);
+}
+
+IVector<int>^ MainPage::Collection::get()
+{
+	return m_collection;
+}
+
+bool MainPage::DeleteVisible::get()
+{
+	return m_collection->Size > 0;
+}
+
+void MainPage::OnVectorChanged(IObservableVector<int>^ sender, IVectorChangedEventArgs^ args)
+{
+	PropertyChanged(this, ref new PropertyChangedEventArgs(L"DeleteVisible"));
+}
+
+void MainPage::OnAddButtonClicked(Object^ sender, RoutedEventArgs^ e)
+{
+	m_collection->Append(m_collection->Size);
+}
+
+void MainPage::OnDeleteButtonClicked(Object^ sender, RoutedEventArgs^ e)
+{
+	AddButton->Focus(::FocusState::Programmatic);
+	m_collection->Clear();
 }
